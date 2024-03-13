@@ -29,6 +29,7 @@
     "@nestjs/typeorm": "^10.0.2",
     "@types/mongodb": "^4.0.7",
     "apollo-server-express": "^3.13.0",
+    "class-validator": "^0.14.1",
     "graphql": "^16.8.1",
     "graphql-tools": "^9.0.1",
     "mongodb": "^5.9.2",
