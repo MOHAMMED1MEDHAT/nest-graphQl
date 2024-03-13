@@ -83,6 +83,31 @@ export class LessonRepository extends Repository<Lesson> {
 		return lesson;
 	}
 
+	async updateLesson(id: string, lessonDto: LessonDto): Promise<Lesson> {
+		const { name, startDate, endDate } = lessonDto;
+		const lesson = await this.getLessonById(id);
+		if (name) {
+			lesson.name = name;
+		}
+		if (startDate) {
+			lesson.startDate = startDate;
+		}
+		if (endDate) {
+			lesson.endDate = endDate;
+		}
+		try {
+			await this.save(lesson);
+		} catch (err) {
+			this.logger.error(
+				`Failed to update a Lesson Data: ${JSON.stringify(lessonDto)}`,
+				err.stack,
+			);
+			throw new InternalServerErrorException();
+		}
+
+		return lesson;
+	}
+
 	async deleteLesson(id: string): Promise<void> {
 		const result = await this.delete({ id });
 
