@@ -4,6 +4,7 @@ import {
 	Logger,
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 import { GetLessonsFilterDto, LessonDto } from './dto';
 import { Lesson } from './lesson.entity';
 
@@ -69,9 +70,10 @@ export class LessonRepository extends Repository<Lesson> {
 
 	async createLesson(lessonDto: LessonDto): Promise<Lesson> {
 		const { name, startDate, endDate } = lessonDto;
-		const lesson = await this.create({ name, startDate, endDate });
+		const id = uuid();
 		try {
-			await this.save(lesson);
+			const lesson = await this.create({ id, name, startDate, endDate });
+			return lesson;
 		} catch (err) {
 			this.logger.error(
 				`Failed to create a Lesson Data: ${JSON.stringify(LessonDto)}`,
@@ -79,8 +81,6 @@ export class LessonRepository extends Repository<Lesson> {
 			);
 			throw new InternalServerErrorException();
 		}
-
-		return lesson;
 	}
 
 	async updateLesson(id: string, lessonDto: LessonDto): Promise<Lesson> {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GetLessonsFilterDto } from './dto';
+import { GetLessonsFilterDto, LessonDto } from './dto';
 import { Lesson } from './lesson.entity';
 import { LessonRepository } from './lesson.repository';
 
@@ -15,8 +15,8 @@ export class LessonService {
 		return this.lessonRepository.getLessonById(id);
 	}
 
-	async createLesson(lesson: Lesson): Promise<Lesson> {
-		return this.lessonRepository.createLesson(lesson);
+	async createLesson(lessonDto: LessonDto): Promise<Lesson> {
+		return await this.lessonRepository.createLesson(lessonDto);
 	}
 
 	async updateLesson(id: string, lesson: Lesson): Promise<Lesson> {

@@ -2,10 +2,12 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigsModule } from './configs/configs.module';
 import { LessonModule } from './lesson/lesson.module';
 
 @Module({
 	imports: [
+		ConfigsModule,
 		TypeOrmModule.forRoot({
 			type: 'mongodb',
 			url: process.env.MONGO_URI,
